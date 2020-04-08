@@ -35,7 +35,7 @@ from typing import List  # noqa: F401
 
 mod = "mod4"
 term = "alacritty"
-app_launcher = "dmenu_run -p 'Run: '"
+app_launcher = "dmenu_run -c -l 20 -p 'Run: '"
 home = os.path.expanduser("~")
 
 keys = [
