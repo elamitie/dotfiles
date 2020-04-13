@@ -138,3 +138,7 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
+
+export PATH="$PATH:~/.local/bin"
+source "${HOME}/.cache/wal/colors.sh"
+(cat ~/.cache/wal/sequences &)

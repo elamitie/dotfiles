@@ -325,6 +325,22 @@
         <command>kfmclient openProfile filemanagement</command>
       </action>
     </keybind>
+    <!-- Multimedia Controls -->
+    <keybind key="XF86AudioRaiseVolume">
+      <action name="Execute">
+        <command>/home/ethan/.local/bin/pulsevol --up</command>
+      </action>
+    </keybind>
+    <keybind key="XF86AudioLowerVolume">
+      <action name="Execute">
+        <command>/home/ethan/.local/bin/pulsevol --down</command>
+      </action>
+    </keybind>
+    <keybind key="XF86AudioMute">
+      <action name="Execute">
+        <command>/home/ethan/.local/bin/pulsevol --mute</command>
+      </action>
+    </keybind>
   </keyboard>
   <mouse>
     <dragThreshold>1</dragThreshold>
