@@ -47,8 +47,8 @@ compositing-underline = over
 compositing-border = over
 
 ; Define fallback values used by all module formats
-format-foreground = #FF0000
-format-background = #00FF00
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
 format-underline =
 format-overline =
 format-spacing =
@@ -64,7 +64,6 @@ foreground-alt = ${xrdb:color7:#222}
 primary = ${xrdb:color1:#222}
 secondary = ${xrdb:color2:#222}
 alert = ${xrdb:color3:#222}
-accent = ${xrdb:color5:#222}
 
 
 ################################################################################
@@ -74,13 +73,13 @@ accent = ${xrdb:color5:#222}
 ################################################################################
 
 [bar/openbox]
-monitor = LVDS1 
+monitor = HDMI-0
 width = 100%
-height = 20
+height = 22
 radius = 0.0
 fixed-center = true
 bottom = false
-separator = |
+separator = "  "
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -95,11 +94,11 @@ line-color = #f00
 ;border-bottom-size = 25
 ;border-color = #00000000
 
-padding-left = 1
-padding-right = 1
+padding-left = 4
+padding-right = 4
 
-module-margin-left = 3
-module-margin-right = 3
+module-margin-left = 2
+module-margin-right = 2
 
 ; Enable support for inter-process messaging
 ; See the Messaging wiki page for more details.
@@ -111,9 +110,9 @@ font-1 = "Font Awesome 5 Free:size=10;0"
 font-2 = "Font Awesome 5 Free Solid:size=10;0"
 font-3 = "Font Awesome 5 Brands:size=10;0"
 
-modules-left = ewmh xwindow
-modules-center = date
-modules-right =  volume memory cpu temperature wired-network wireless-network
+modules-left = ewmh
+modules-center = xwindow
+modules-right =  pulseaudio memory cpu wired-network wireless-network battery date
 
 ;tray-detached = false
 ;tray-offset-x = 0
@@ -134,6 +133,7 @@ type = internal/cpu
 interval = 1
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
+format-underline = ${colors.secondary}
 format-prefix = " "
 ;format-prefix-foreground = #fefefe
 
@@ -151,7 +151,7 @@ format = <label>
 ;   %percentage% (default) - total cpu load
 ;   %percentage-cores% - load percentage for each core
 ;   %percentage-core[1-9]% - load percentage for specific core
-label = Cpu %percentage:3%%
+label = %percentage:3%%
 
 ################################################################################
 
@@ -164,13 +164,14 @@ interval = 5
 ; NOTE: if you want to use syntax tags here you need to use %%{...}
 date = " %a %b %d, %Y"
 date-alt = " %a %b %d, %Y"
-time = %l:%M%p
-time-alt = %l:%M%p
-format-prefix = " "
+time = %H:%M
+time-alt = %H:%M:%S
+;format-prefix = " "
 ;format-prefix-foreground = #fefefe
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
-label = "%date% %time% "
+format-underline = ${colors.secondary}
+label = "%time%"
 
 ################################################################################
 
@@ -196,12 +197,12 @@ icon-6 = 7;
 icon-7 = 8;
 #icon-8 = 9;
 #icon-9 = 10;
-icon-default = ""
+icon-default = ""
 format = <label-state>
 label-monitor = %name%
 
 label-active = ${module/ewmh.icon-default}
-label-active-foreground = ${colors.accent}
+label-active-foreground = ${colors.secondary}
 label-active-background = ${colors.background}
 ;label-active-underline= #6790eb
 label-active-padding = 3
@@ -237,13 +238,14 @@ interval = 1
 ;   %mb_used%
 ;   %mb_free%
 ;   %mb_total%
-label = %percentage_used%%
+label = %percentage_used:3%%
 
-format = Mem <label>
+format = <label>
 format-prefix = " "
-;format-prefix-foreground = ${colors.accent}
+;format-prefix-foreground = ${colors.secondary}
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
+format-underline = ${colors.secondary}
 
 ################################################################################
 
@@ -314,17 +316,17 @@ type = internal/volume
 format-volume = "<label-volume>  <bar-volume>"
 
 label-volume = " "
-label-volume-foreground = #40ad4b
+label-volume-foreground = ${colors.secondary}
 label-muted = muted
 
 bar-volume-width = 10
-bar-volume-foreground-0 = #40ad4b
-bar-volume-foreground-1 = #40ad4b
-bar-volume-foreground-2 = #40ad4b
-bar-volume-foreground-3 = #40ad4b
-bar-volume-foreground-4 = #40ad4b
-bar-volume-foreground-5 = #40ad4b
-bar-volume-foreground-6 = #40ad4b
+bar-volume-foreground-0 = ${colors.secondary}
+bar-volume-foreground-1 = ${colors.secondary}
+bar-volume-foreground-2 = ${colors.secondary}
+bar-volume-foreground-3 = ${colors.secondary}
+bar-volume-foreground-4 = ${colors.secondary}
+bar-volume-foreground-5 = ${colors.secondary}
+bar-volume-foreground-6 = ${colors.secondary}
 bar-volume-gradient = false
 bar-volume-indicator = 
 bar-volume-indicator-font = 2
@@ -335,11 +337,58 @@ bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground}
 format-volume-foreground = ${colors.foreground}
 format-volume-background = ${colors.background}
+format-volume-underline = ${colors.secondary}
 format-muted-prefix = "  "
-format-muted-prefix-foreground = "#ff0000"
+format-muted-prefix-foreground = ${colors.secondary}
 format-muted-foreground = ${colors.foreground}
 format-muted-background = ${colors.background}
 
+#################################################################################
+
+[module/battery]
+type=internal/battery
+
+full-at = 99
+battery = BAT0
+poll-interval = 5
+
+format-charging = <label-charging>
+format-charging-underline = ${colors.secondary}
+
+format-discharging = <label-discharging>
+format-discharging-underline = ${colors.secondary}
+
+label-charging =   %percentage%%
+label-charging-foreground = ${colors.foreground}
+
+label-discharging =   %percentage%%
+label-discharging-foreground = ${colors.foreground}
+
+label-full =   %percentage%%
+label-full-foreground = ${colors.foreground}
+
+#################################################################################
+
+[module/pulseaudio]
+type=internal/pulseaudio
+
+; Set this to the desktop monitor speaker, otherwise it just defaults to internal so it
+; works with the thonkpad.
+sink = alsa_output.pci-0000_01_00.1.hdmi-stereo-extra1
+use_ui_max = false
+interval = 5
+
+format-volume = <label-volume>
+format-volume-underline = ${colors.secondary}
+
+label-volume =   %percentage%%
+label-volume-foreground = ${colors.foreground}
+
+label-muted =   %percentage%%
+label-muted-foreground = ${colors.foreground}
+label-muted-underline = ${colors.secondary}
+
+click-right = pavucontrol &
 
 #################################################################################
 
@@ -347,7 +396,6 @@ format-muted-background = ${colors.background}
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
 interface = enp4s0
-;interface = enp14s0
 interval = 3.0
 
 ; Available tokens:
@@ -364,13 +412,13 @@ label-disconnected = disconnected
 
 format-connected-foreground = ${colors.foreground}
 format-connected-background = ${colors.background}
-format-connected-underline = #55aa55
+format-connected-underline = ${colors.secondary}
 format-connected-prefix = " "
-format-connected-prefix-foreground = #55aa55
+format-connected-prefix-foreground = ${colors.foreground}
 format-connected-prefix-background = ${colors.background}
 
 format-disconnected = <label-disconnected>
-format-disconnected-underline = ${colors.alert}
+format-disconnected-underline = ${colors.secondary}
 label-disconnected-foreground = ${colors.foreground}
 
 ################################################################################
@@ -387,9 +435,9 @@ format-connected = <label-connected>
 format-connected-foreground = ${colors.foreground}
 format-connected-background = ${colors.background}
 format-connected-prefix = "  "
-format-connected-prefix-foreground = #7e52c6
+format-connected-prefix-foreground = ${colors.secondary}
 format-connected-prefix-background = ${colors.background}
-format-connected-underline = #7e52c6
+format-connected-underline = ${colors.secondary}
 
 label-disconnected = %ifname% disconnected
 label-disconnected-foreground = ${colors.alert}
@@ -411,7 +459,7 @@ ramp-signal-4 = ▅
 ramp-signal-5 = ▆
 ramp-signal-6 = ▇
 ramp-signal-7 = █
-ramp-signal-foreground = #7e52c6
+ramp-signal-foreground = ${colors.secondary}
 
 ################################################################################
 
